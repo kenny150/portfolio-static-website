@@ -1,0 +1,36 @@
+---
+- name: Instalar e iniciar Nginx na EC2 AWS
+  hosts: aws_ec2
+  become: yes
+  vars:
+    ansible_ssh_private_key_file: "{{ lookup('env', 'HOME') }}/Documentos/aws-credentials/keys/ec2-instance.pem"
+    ansible_user: ec2-user
+  tasks:
+    - name: Atualizar pacotes
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_os_family == 'RedHat'
+
+    - name: Instalar Nginx
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Iniciar e habilitar Nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+      when: ansible_os_family == 'RedHat'
+
+    - name: Abrir porta 80 no firewall (caso firewalld esteja ativo)
+      firewalld:
+        port: 80/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+      when: ansible_os_family == 'RedHat'
+        and ansible_facts.services['firewalld.service'] is defined
+        and ansible_facts.services['firewalld.service'].state == 'running'
