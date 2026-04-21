@@ -1,1 +1,1 @@
-infra_aws/.terradorm/*
+infra_aws/.terraform/providers/registry.terraform.io/hashicorp/aws/6.41.0/linux_amd64/terraform-provider-aws_v6.41.0_x5
