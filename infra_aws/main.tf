@@ -135,16 +135,16 @@ resource "aws_route_table_association" "ec2_nginx_public_assoc" {
   route_table_id = aws_route_table.ec2_nginx_public_rt.id
 }
 
-# Associação de IP público à interface de rede
-resource "aws_eip" "ec2_nginx_eip" {
-  network_interface         = aws_network_interface.ec2_nginx_interface.id
-  associate_with_private_ip = "172.16.10.100"
+# # Associação de IP público à interface de rede
+# resource "aws_eip" "ec2_nginx_eip" {
+#   network_interface         = aws_network_interface.ec2_nginx_interface.id
+#   associate_with_private_ip = "172.16.10.100"
 
-  depends_on = [aws_instance.ec2_nginx]
+#   depends_on = [aws_instance.ec2_nginx]
 
-  tags = {
-    Name = "ec2-instance-eip"
-    app  = "nginx"
-  }
-}
+#   tags = {
+#     Name = "ec2-instance-eip"
+#     app  = "nginx"
+#   }
+# }
 
