@@ -19,11 +19,10 @@ resource "aws_instance" "ec2_nginx" {
   ami           = "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
   instance_type = "t3.micro"
   key_name      = "ec2-instance"
-  associate_public_ip_address = true
+  subnet_id     = aws_subnet.ec2_nginx_subnet.id
+  vpc_security_group_ids = [aws_security_group.ec2_nginx_sg.id]
 
-  # primary_network_interface {
-  #   network_interface_id = aws_network_interface.ec2_nginx_interface.id
-  # }
+  associate_public_ip_address = true
 
   tags = {
     Name = "ec2-instance"
@@ -32,7 +31,8 @@ resource "aws_instance" "ec2_nginx" {
 }
 
 resource "aws_vpc" "ec2_nginx_vpc" {
-  cidr_block = "172.16.0.0/16"
+  cidr_block = "10.0.0.0/16"
+  
 
   tags = {
     Name = "ec2-instance-vpc"
@@ -42,8 +42,9 @@ resource "aws_vpc" "ec2_nginx_vpc" {
 
 resource "aws_subnet" "ec2_nginx_subnet" {
   vpc_id            = aws_vpc.ec2_nginx_vpc.id
-  cidr_block        = "172.16.10.0/24"
+  cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "ec2-instance-subnet"
@@ -94,15 +95,8 @@ resource "aws_security_group" "ec2_nginx_sg" {
   }
 }
 
-resource "aws_network_interface" "ec2_nginx_interface" {
-  subnet_id       = aws_subnet.ec2_nginx_subnet.id
-  private_ips     = ["172.16.10.100"]
-  security_groups = [aws_security_group.ec2_nginx_sg.id]
-
-  tags = {
-    Name = "ec2-instance-network-interface"
-    app  = "nginx"
-  }
+resource "aws_network_interface" "ec2_nginx_interface_public" {
+  subnet_id = aws_subnet.ec2_nginx_subnet.id
 }
 
 # Internet Gateway para acesso externo
@@ -135,17 +129,3 @@ resource "aws_route_table_association" "ec2_nginx_public_assoc" {
   subnet_id      = aws_subnet.ec2_nginx_subnet.id
   route_table_id = aws_route_table.ec2_nginx_public_rt.id
 }
-
-# # Associação de IP público à interface de rede
-# resource "aws_eip" "ec2_nginx_eip" {
-#   network_interface         = aws_network_interface.ec2_nginx_interface.id
-#   associate_with_private_ip = "172.16.10.100"
-
-#   depends_on = [aws_instance.ec2_nginx]
-
-#   tags = {
-#     Name = "ec2-instance-eip"
-#     app  = "nginx"
-#   }
-# }
-
