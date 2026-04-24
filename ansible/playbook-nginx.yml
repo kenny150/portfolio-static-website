@@ -34,3 +34,36 @@
       when: ansible_os_family == 'RedHat'
         and ansible_facts.services['firewalld.service'] is defined
         and ansible_facts.services['firewalld.service'].state == 'running'
+
+    - name: Criando página inicial personalizada
+      copy:
+        src: ../pages/index.html
+        dest: /usr/share/nginx/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Garantir que o diretório styles existe
+      file:
+        path: /usr/share/nginx/html/styles
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Aplicando estilos personalizados
+      copy:
+        src: ../pages/styles/style.css
+        dest: /usr/share/nginx/html/styles/style.css
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Reiniciar Nginx
+
+  handlers:
+    - name: Reiniciar Nginx
+      systemd:
+        name: nginx
+        state: restarted
+      when: ansible_os_family == 'RedHat'
