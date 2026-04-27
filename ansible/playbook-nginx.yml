@@ -51,6 +51,48 @@
         group: root
         mode: '0755'
 
+    - name: Criando diretório para certificados SSL
+      file:
+        path: /etc/nginx/ssl
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      become: true
+
+    - name: Configurando bloco ssl para redirecionar http para https
+      copy:
+        src: ../certs/nginx_ssl.conf
+        dest: /etc/nginx/conf.d/ssl.conf
+        owner: root
+        group: root
+        mode: '0644'
+      become: true 
+      # notify:
+      #   - Reiniciar Nginx   
+
+    - name: Copiando certificados SSL para o servidor
+      copy:
+        src: ../certs/nginx-selfsigned.crt
+        dest: /etc/nginx/ssl/nginx.crt
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
+      # notify:
+      #   - Reiniciar Nginx
+
+    - name: Copiando chave privada SSL para o servidor
+      copy:
+        src: ../certs/nginx-selfsigned.key
+        dest: /etc/nginx/ssl/nginx.key
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
+      # notify:
+      #   - Reiniciar Nginx    
+
     - name: Aplicando estilos personalizados
       copy:
         src: ../pages/styles/style.css
