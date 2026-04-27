@@ -1,5 +1,11 @@
 [
   {
+    "timestamp": "2026-04-28T19:30:00Z",
+    "status": "success",
+    "duration": 30,
+    "user": "kennedy"
+  },  
+  {
     "timestamp": "2026-04-27T14:00:00Z",
     "status": "success",
     "duration": 45,
