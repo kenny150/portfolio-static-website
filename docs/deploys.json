@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": "2026-04-27T14:00:00Z",
+    "status": "success",
+    "duration": 45,
+    "user": "kennedy"
+  },
+  {
+    "timestamp": "2026-04-26T18:30:00Z",
+    "status": "failed",
+    "duration": 30,
+    "user": "kennedy"
+  }
+]
