@@ -91,12 +91,45 @@
         mode: '0644'
       become: true
       # notify:
-      #   - Reiniciar Nginx    
+      #   - Reiniciar Nginx
+    
+    - name: Criando diretório js
+      file:
+        path: /usr/share/nginx/html/js
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Criando o diretório assets
+      file:
+        path: /usr/share/nginx/html/assets
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Copiando tudo que tem em assets para o servidor
+      ansible.builtin.copy:
+        src: ../pages/assets
+        dest: /usr/share/nginx/html/
+        owner: root
+        group: root
+        mode: '0755'
+      become: true
+
+    - name: Copiando arquivo js para o servidor
+      copy:
+        src: ../pages/js/scripts.js
+        dest: /usr/share/nginx/html/js/scripts.js
+        owner: root
+        group: root
+        mode: '0755'
 
     - name: Aplicando estilos personalizados
       copy:
-        src: ../pages/styles/style.css
-        dest: /usr/share/nginx/html/styles/style.css
+        src: ../pages/styles/styles.css
+        dest: /usr/share/nginx/html/styles/styles.css
         owner: root
         group: root
         mode: '0644'
