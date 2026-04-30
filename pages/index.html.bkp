@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kennedy's Portfolio</title>
+    <style>
+        @import url('styles/style.css');
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kennedy - Portfolio</h1>
+        <p>Welcome to my portfolio! Here you can find some of my main projects and ways to contact me.</p>
+        <h2>Projects</h2>
+        <div class="projetos">
+            <div class="projeto">
+                <h3>Automated Web Page Deployment</h3>
+                <p>Automated deployment of a static website.</p>
+                <a href="#" target="_blank">Click to go to Github</a>
+            </div>
+            <div class="projeto">
+                <h3>Project 2</h3>
+                <p>Brief description of project 2.</p>
+                <a href="#" target="_blank">Click to go to Github</a>
+            </div>
+            <div class="projeto">
+                <h3>Project 3</h3>
+                <p>Brief description of project 3.</p>
+                <a href="#" target="_blank">Click to go to Github</a>
+            </div>
+        </div>
+        <div class="contato">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:seuemail@exemplo.com">alvkennedy@gmail.com</a></p>
+            <p>LinkedIn: <a href="#" target="_blank">Your LinkedIn</a></p>
+        </div>
+    </div>
+</body>
+</html>
