@@ -1,2 +1,2 @@
 [aws_ec2]
-18.204.35.68 ansible_user=ec2-user ansible_ssh_private_key_file=~/Documentos/aws-credentials/keys/ec2-instance.pem
+32.194.33.215 ansible_user=ec2-user ansible_ssh_private_key_file=~/Documentos/aws-credentials/keys/ec2-instance.pem
