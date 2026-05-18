@@ -125,8 +125,25 @@ resource "aws_route_table" "ec2_nginx_public_rt" {
   }
 }
 
+resource "aws_subnet" "ec2_nginx_subnet_2" {
+  vpc_id                  = aws_vpc.ec2_nginx_vpc.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "us-east-1b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "ec2-instance-subnet-2"
+    app  = "nginx"
+  }
+}
+
 # Associação da tabela de rotas pública à subnet
 resource "aws_route_table_association" "ec2_nginx_public_assoc" {
   subnet_id      = aws_subnet.ec2_nginx_subnet.id
+  route_table_id = aws_route_table.ec2_nginx_public_rt.id
+}
+
+resource "aws_route_table_association" "ec2_nginx_public_assoc_2" {
+  subnet_id      = aws_subnet.ec2_nginx_subnet_2.id
   route_table_id = aws_route_table.ec2_nginx_public_rt.id
 }
