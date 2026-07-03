@@ -15,5 +15,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 *.jar
-certs/
+certs/*.crt
+certs/*.key
 plan.out

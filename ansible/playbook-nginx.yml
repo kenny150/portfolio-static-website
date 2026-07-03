@@ -3,7 +3,6 @@
   hosts: aws_ec2
   become: yes
   vars:
-    ansible_ssh_private_key_file: "{{ lookup('env', 'HOME') }}/Documentos/aws-credentials/keys/ec2-instance.pem"
     ansible_user: ec2-user
   tasks:
     - name: Atualizar pacotes
@@ -16,13 +15,6 @@
       yum:
         name: nginx
         state: present
-      when: ansible_os_family == 'RedHat'
-
-    - name: Iniciar e habilitar Nginx
-      systemd:
-        name: nginx
-        state: started
-        enabled: yes
       when: ansible_os_family == 'RedHat'
 
     - name: Abrir porta 80 no firewall (caso firewalld esteja ativo)
@@ -88,11 +80,39 @@
         dest: /etc/nginx/ssl/nginx.key
         owner: root
         group: root
-        mode: '0644'
+        mode: '0600'
       become: true
       # notify:
       #   - Reiniciar Nginx
-    
+
+    - name: Verificar configuração do Nginx
+      become: true
+      command: nginx -t
+
+    - name: Start and enable Nginx
+      become: true
+      block:
+        - name: Iniciar e habilitar Nginx
+          systemd:
+            name: nginx
+            state: started
+            enabled: yes
+          when: ansible_os_family == 'RedHat'
+      rescue:
+        - name: Coletar logs do Nginx após falha
+          command: journalctl -xeu nginx.service --no-pager -n 50
+          register: nginx_journal
+          failed_when: false
+          changed_when: false
+
+        - name: Exibir logs do Nginx
+          debug:
+            var: nginx_journal.stdout_lines
+
+        - name: Falhar com diagnóstico do Nginx
+          fail:
+            msg: "Nginx service failed to start. Veja os logs acima para detalhes."
+
     - name: Criando diretório js
       file:
         path: /usr/share/nginx/html/js
@@ -138,7 +158,13 @@
 
   handlers:
     - name: Reiniciar Nginx
-      systemd:
-        name: nginx
-        state: restarted
+      become: true
+      block:
+        - name: Verificar configuração do Nginx
+          command: nginx -t
+
+        - name: Reiniciar Nginx
+          systemd:
+            name: nginx
+            state: restarted
       when: ansible_os_family == 'RedHat'

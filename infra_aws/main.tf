@@ -1,6 +1,6 @@
 terraform {
 
-  required_version = "1.15.3"
+  required_version = "1.15.7"
 
   required_providers {
     aws = {
@@ -15,11 +15,20 @@ provider "aws" {
   region = "us-east-1"
 }
 
+variable "ansible_public_key" {
+  type = string
+}
+
+resource "aws_key_pair" "ansible" {
+  key_name   = "ansible"
+  public_key = var.ansible_public_key
+}
+
 resource "aws_instance" "ec2_nginx" {
   count                  = 2
   ami                    = "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
   instance_type          = "t3.micro"
-  key_name               = "ec2-instance"
+  key_name               = "ansible"
   subnet_id              = aws_subnet.ec2_nginx_subnet.id
   vpc_security_group_ids = [aws_security_group.ec2_nginx_sg.id]
 
