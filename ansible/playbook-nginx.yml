@@ -199,18 +199,6 @@
       notify:
         - Reiniciar Nginx
 
-    - name: Copiando pasta forms para o servidor
-      ansible.builtin.copy:
-        src: ../pages/forms/
-        dest: /usr/share/nginx/html/forms/
-        owner: root
-        group: root
-        mode: '0644'
-        directory_mode: '0755'
-      become: true
-      notify:
-        - Reiniciar Nginx
-
     - name: Copiando pasta js para o servidor
       ansible.builtin.copy:
         src: ../pages/js/
