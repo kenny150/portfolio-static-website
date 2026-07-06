@@ -13,14 +13,28 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # persist-credentials default (true) para conseguir fazer push do docs/ de volta na main
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
 
-      - name: Sync pages content into docs
+      - name: Sync pages/ into docs/ (keep CNAME)
         run: |
           mkdir -p docs
-          rsync -a --delete pages/ docs/
+          # --exclude='CNAME' evita que o --delete remova o dominio customizado,
+          # ja que pages/ nao tem CNAME e docs/ tem.
+          rsync -a --delete --exclude='CNAME' pages/ docs/
+
+      - name: Commit synced docs/ back to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain docs)" ]; then
+            git add docs
+            # [skip ci] evita que este commit dispare um novo run do workflow
+            git commit -m "chore: sync docs/ from pages/ [skip ci]"
+            git push origin HEAD:main
+          else
+            echo "docs/ already in sync with pages/"
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
