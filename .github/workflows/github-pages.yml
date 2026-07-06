@@ -4,43 +4,45 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      # persist-credentials default (true) para conseguir fazer push do docs/ de volta na main
       - uses: actions/checkout@v4
 
       - name: Sync pages/ into docs/ (keep CNAME)
         run: |
           mkdir -p docs
-          # --exclude='CNAME' evita que o --delete remova o dominio customizado,
-          # ja que pages/ nao tem CNAME e docs/ tem.
+          # --exclude='CNAME' evita que o --delete remova o domínio customizado,
+          # já que pages/ não possui CNAME e docs/ sim.
           rsync -a --delete --exclude='CNAME' pages/ docs/
 
-      - name: Commit synced docs/ back to main
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ -n "$(git status --porcelain docs)" ]; then
-            git add docs
-            # [skip ci] evita que este commit dispare um novo run do workflow
-            git commit -m "chore: sync docs/ from pages/ [skip ci]"
-            git push origin HEAD:main
-          else
-            echo "docs/ already in sync with pages/"
-          fi
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          publish_branch: gh-pages
-          force_orphan: true
-          keep_files: false
+          path: ./docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
