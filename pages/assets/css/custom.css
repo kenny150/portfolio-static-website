@@ -1,0 +1,68 @@
+/**
+* Customizações ByteforgeIT — carregado DEPOIS de main.css.
+* Mantenha as alterações próprias aqui para que o template original
+* (assets/css/main.css) continue substituível sem perder este trabalho.
+*/
+
+/*--------------------------------------------------------------
+# Portfólio — capas com moldura uniforme
+--------------------------------------------------------------*/
+
+/* O template deixava o tamanho do card à mercê das dimensões nativas de cada
+   arquivo. Fixando a proporção aqui, qualquer imagem — screenshot largo, foto
+   vertical, seja qual for — ocupa exatamente o mesmo espaço na grade. */
+.portfolio .portfolio-content img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+}
+
+/*--------------------------------------------------------------
+# Portfólio — projetos agrupados (nome + 3 imagens por linha)
+--------------------------------------------------------------*/
+
+.portfolio .portfolio-project {
+  margin-top: 40px;
+}
+
+.portfolio .portfolio-project+.portfolio-project {
+  margin-top: 55px;
+  padding-top: 45px;
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 88%);
+}
+
+.portfolio .portfolio-project-header {
+  margin-bottom: 22px;
+}
+
+/* Precisa dominar o texto de introdução (24px), senão o nome do projeto
+   não lê como título de bloco. */
+.portfolio .portfolio-project-header h3 {
+  color: var(--heading-color);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.portfolio .portfolio-project-header p {
+  color: color-mix(in srgb, var(--default-color), transparent 25%);
+  font-size: 15px;
+  max-width: 820px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 575px) {
+  .portfolio .portfolio-project-header h3 {
+    font-size: 26px;
+  }
+}
+
+/* As capas do template ficavam como retângulos secos sobre fundo branco, sem
+   definição de borda. O raio e a linha dão acabamento sem competir com a arte. */
+.portfolio .portfolio-content {
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
