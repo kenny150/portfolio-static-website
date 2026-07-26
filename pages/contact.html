@@ -108,10 +108,16 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="https://formsubmit.co/alvkennedy@gmail.com" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
-              <input type="hidden" name="_subject" value="New message from portfolio contact form">
+            <form action="https://formsubmit.co/ajax/alvkennedy@gmail.com" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
+              <input type="hidden" name="_subject" value="Novo contato pelo site — ByteforgeIT">
+              <input type="hidden" name="_template" value="table">
+              <!-- _captcha precisa ficar false no fluxo AJAX: o desafio do FormSubmit
+                   é uma página inteira, que não tem como aparecer sem sair do site.
+                   A proteção fica por conta do honeypot _honey abaixo. -->
               <input type="hidden" name="_captcha" value="false">
-              <input type="hidden" name="_next" value="https://kenny150.github.io/portfolio-static-website/contact.html">
+              <!-- Isca para robôs: invisível e fora da ordem de tabulação. Humano nunca
+                   preenche; bot que preenche tudo faz o FormSubmit descartar o envio. -->
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -189,6 +195,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/contact-form.js"></script>
 
 </body>
 
