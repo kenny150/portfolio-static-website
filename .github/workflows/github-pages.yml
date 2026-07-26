@@ -21,20 +21,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Sync pages/ into docs/ (keep CNAME)
-        run: |
-          mkdir -p docs
-          # --exclude='CNAME' evita que o --delete remova o domínio customizado,
-          # já que pages/ não possui CNAME e docs/ sim.
-          rsync -a --delete --exclude='CNAME' pages/ docs/
-
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
+      # pages/ é HTML estático pronto — não há etapa de build. Publicamos o
+      # diretório direto; o CNAME vive em pages/CNAME e vai junto no artefato.
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs
+          path: ./pages
 
   deploy:
     needs: build
