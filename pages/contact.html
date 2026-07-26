@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Contato - ByteforgeIT</title>
+  <title>Contato - ByteForgeIT</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -44,7 +44,7 @@
       <a href="index.html" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">ByteforgeIT</h1>
+        <h1 class="sitename">ByteForgeIT</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -108,10 +108,18 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="https://formsubmit.co/alvkennedy@gmail.com" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
-              <input type="hidden" name="_subject" value="New message from portfolio contact form">
+            <!-- Alias do FormSubmit no lugar do endereço: entrega no mesmo e-mail,
+                 sem expô-lo no código-fonte para robôs de spam coletarem. -->
+            <form action="https://formsubmit.co/ajax/7788f4ba8492bb07b5032c347f6211b1" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
+              <input type="hidden" name="_subject" value="Contato - ByteForgeIT">
+              <input type="hidden" name="_template" value="table">
+              <!-- _captcha precisa ficar false no fluxo AJAX: o desafio do FormSubmit
+                   é uma página inteira, que não tem como aparecer sem sair do site.
+                   A proteção fica por conta do honeypot _honey abaixo. -->
               <input type="hidden" name="_captcha" value="false">
-              <input type="hidden" name="_next" value="https://kenny150.github.io/portfolio-static-website/contact.html">
+              <!-- Isca para robôs: invisível e fora da ordem de tabulação. Humano nunca
+                   preenche; bot que preenche tudo faz o FormSubmit descartar o envio. -->
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -154,7 +162,7 @@
 
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">ByteforgeIT</strong> <span>Todos os direitos reservados</span></p>
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">ByteForgeIT</strong> <span>Todos os direitos reservados</span></p>
       </div>
       <div class="social-links d-flex justify-content-center">
         <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -189,6 +197,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/contact-form.js"></script>
 
 </body>
 
