@@ -117,3 +117,58 @@
   max-width: 30ch;
   margin-bottom: 14px;
 }
+
+/*--------------------------------------------------------------
+# Serviços — convite para demandas fora da lista
+--------------------------------------------------------------*/
+
+/* Fundo levemente tingido em vez de branco sobre branco: sem isso a caixa
+   não se destaca da seção e o convite passa despercebido. */
+.services .cta-demanda {
+  margin-top: 50px;
+  padding: 40px 32px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 86%);
+  border-radius: 10px;
+  background-color: color-mix(in srgb, var(--default-color), transparent 96%);
+  text-align: center;
+}
+
+.services .cta-demanda h3 {
+  color: var(--heading-color);
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.services .cta-demanda p {
+  color: color-mix(in srgb, var(--default-color), transparent 22%);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 68ch;
+  margin: 0 auto 26px;
+}
+
+.services .cta-demanda .cta-demanda-botao {
+  display: inline-block;
+  padding: 12px 34px;
+  border-radius: 50px;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+.services .cta-demanda .cta-demanda-botao:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+  color: var(--contrast-color);
+}
+
+@media (max-width: 575px) {
+  .services .cta-demanda {
+    padding: 30px 22px;
+  }
+
+  .services .cta-demanda h3 {
+    font-size: 20px;
+  }
+}
