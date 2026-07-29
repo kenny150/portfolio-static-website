@@ -5,6 +5,45 @@
 */
 
 /*--------------------------------------------------------------
+# Portfólio — abertura da seção
+--------------------------------------------------------------*/
+
+/* A introdução usava a classe .portfolio-info, que no template é a legenda
+   sobre a capa: herdava 24px e o peso 500 do reboot do Bootstrap, ficando menor
+   e mais fraca que o nome de cada projeto (32px/700) — mesma família, mas com
+   cara de fonte diferente.
+
+   Aqui ela adota o padrão de título de seção que o resto do site já usa
+   (.section-title h2 do main.css: 32px, peso 400), só sem a centralização, que
+   não cabe numa saudação. E virou <h2>, dando hierarquia real ao documento:
+   h1 (marca) > h2 (abertura) > h3 (projeto) > h4 (legenda da capa). */
+.portfolio .portfolio-intro {
+  margin-bottom: 10px;
+}
+
+.portfolio .portfolio-intro h2 {
+  color: var(--heading-color);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.portfolio .portfolio-intro p {
+  color: color-mix(in srgb, var(--default-color), transparent 22%);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 68ch;
+  margin-bottom: 0;
+}
+
+@media (max-width: 575px) {
+  .portfolio .portfolio-intro h2 {
+    font-size: 26px;
+  }
+}
+
+/*--------------------------------------------------------------
 # Portfólio — capas com moldura uniforme
 --------------------------------------------------------------*/
 
@@ -37,13 +76,15 @@
   margin-bottom: 22px;
 }
 
-/* Precisa dominar o texto de introdução (24px), senão o nome do projeto
-   não lê como título de bloco. */
+/* Título de bloco, não de seção: segue o idioma do template para itens dentro
+   de uma seção — bold 700 e menor que a abertura (32px/400), como os títulos
+   dos serviços (22px/700). Ficar do mesmo tamanho da abertura, e mais pesado
+   que ela, era o que apagava a hierarquia entre as duas. */
 .portfolio .portfolio-project-header h3 {
   color: var(--heading-color);
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
   margin-bottom: 10px;
 }
 
@@ -79,7 +120,7 @@
 
 @media (max-width: 575px) {
   .portfolio .portfolio-project-header h3 {
-    font-size: 26px;
+    font-size: 22px;
   }
 }
 
