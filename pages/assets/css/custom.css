@@ -5,6 +5,53 @@
 */
 
 /*--------------------------------------------------------------
+# Header — separação do conteúdo
+--------------------------------------------------------------*/
+
+/* O header é branco e a primeira seção também: sem linha, os dois se fundem e
+   a barra some — principalmente na index, onde não há a faixa cinza do título
+   de página logo abaixo. Como ele é sticky, a borda ainda marca o limite entre
+   a barra e o conteúdo que passa por baixo dela na rolagem.
+
+   Um pouco mais forte que as linhas internas do site (as capas do portfólio
+   usam 90% transparente): aqui a borda precisa ser lida como estrutura da
+   página, não como acabamento de um card. */
+.header {
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 82%);
+}
+
+/*--------------------------------------------------------------
+# Header — marca em imagem
+--------------------------------------------------------------*/
+
+/* O nome do site passou a ser o wordmark (cubo + ByteForgeIT). O <h1> continua
+   ali envolvendo a imagem: mantém a hierarquia do documento e dá à marca um
+   nome acessível pelo alt, sem texto duplicado para o leitor de tela.
+
+   O template dimensiona o logo em max-height: 32px, medida pensada para um
+   ícone quadrado ao lado do nome escrito. Aqui a imagem é o nome inteiro, num
+   formato bem mais largo (4,3:1), e nessa altura a palavra ficava menor que o
+   menu. O line-height zerado remove o espaço que o <h1> reservava para texto
+   que não existe mais e realinha a marca ao centro do header. */
+.header .logo h1.sitename {
+  display: flex;
+  line-height: 0;
+}
+
+.header .logo img {
+  max-height: none;
+  height: 38px;
+  width: auto;
+  margin-right: 0;
+}
+
+@media (max-width: 575px) {
+  .header .logo img {
+    height: 30px;
+  }
+}
+
+/*--------------------------------------------------------------
 # Portfólio — abertura da seção
 --------------------------------------------------------------*/
 
